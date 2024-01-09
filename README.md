@@ -1,4 +1,14 @@
-# Assignment 3
+# VR Project
+
+## Roadmap
+-  [ ] Design a Slope Hill
+-  [ ] Make the Hill Slipery with Physic Materials and Friction
+-  [ ] Implement the three Turning Techniques
+   -  [ ] Head Tracking
+   -  [ ] Controller Tracking
+   -  [ ] Both together
+-  [ ] Design the Track and Game
+-  [ ] Evaluate VR Sickness and Presence with experiments
 
 ## Team 13
 - Daniel Santiago Rappy
@@ -12,7 +22,6 @@
 - [Project Structure](#project-structure)
 - [Object Manipulation](#object-manipulation)
 - [How to Contribute](#how-to-contribute)
-
 
 ## Prerequisites 
 
@@ -28,7 +37,7 @@ Before you begin, ensure you have the following:
 
 1. Clone this repository to your local machine.
    ```bash
-   git clone https://gitlab.com/HCCDIKU/vr-course-2324/group-13/assignment-2/
+   git clone https://gitlab.com/HCCDIKU/vr-course-2324/group-13/vr-project/
    ```
 
 2. Open Unity Hub and add the project by selecting the cloned folder.
@@ -36,7 +45,7 @@ Before you begin, ensure you have the following:
 ## Project Structure 
 
 - **Assets:** Contains all the assets, including models, textures, and scripts.
-- **Build:** Conatins the ` assignment_2.apk ` file.
+- **Build:** Conatins the `vr-project.apk ` file.
 
 ## Drawing Name
 
