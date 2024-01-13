@@ -1,15 +1,5 @@
 # VR Project
 
-## Roadmap
--  [ ] Design a Slope Hill
--  [ ] Make the Hill Slipery with Physic Materials and Friction
--  [ ] Implement the three Turning Techniques
-   -  [ ] Head Tracking
-   -  [ ] Controller Tracking
-   -  [ ] Both together
--  [ ] Design the Track and Game
--  [ ] Evaluate VR Sickness and Presence with experiments
-
 ## Team 13
 - Daniel Santiago Rappy
 - Lovisa Nittler
