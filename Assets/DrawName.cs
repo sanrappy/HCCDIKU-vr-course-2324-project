@@ -7,6 +7,9 @@ using UnityEngine;
 public class DrawName : MonoBehaviour
 {
     public DataLogger dataLogger;
+    public int userId = 1;
+    public int trialId = 1;
+    public string eventName = "Log";
     public float factor;
     
     private Vector3 oldPosition; 
@@ -14,7 +17,7 @@ public class DrawName : MonoBehaviour
 
     void Start()
     {
-        oldPosition = this.gameObject.GetComponent<Transform>().localPosition;
+        oldPosition = this.gameObject.GetComponent<Transform>().eulerAngles;
         print("Initial Position: "+oldPosition.x.ToString()+";"+oldPosition.y.ToString()+";"+oldPosition.z.ToString());
     }
 
@@ -26,7 +29,7 @@ public class DrawName : MonoBehaviour
                 isLogging = true;
                 print("Start Logging");
                 dataLogger.StartLogging();
-                dataLogger.Log(0,0,DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),"Test",oldPosition.x.ToString(),oldPosition.y.ToString(), oldPosition.z.ToString());
+                dataLogger.Log(userId,trialId,DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),eventName,oldPosition.x.ToString(),oldPosition.y.ToString(), oldPosition.z.ToString());
             } else {
                 isLogging = false;
                 print("Stop Logging");
@@ -37,10 +40,10 @@ public class DrawName : MonoBehaviour
 
     void FixedUpdate() // TODO: Simplify by using a counter to log only every n update 
     {
-        Vector3 position = this.gameObject.GetComponent<Transform>().localPosition;
+        Vector3 position = this.gameObject.GetComponent<Transform>().eulerAngles;
         var dis = Vector3.Distance(position, oldPosition);
         if (dis > factor) { 
-            dataLogger.Log(0,0,DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),"Test",position.x.ToString(),position.y.ToString(), position.z.ToString());
+            dataLogger.Log(userId,trialId,DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),eventName,position.x.ToString(),position.y.ToString(), position.z.ToString());
             oldPosition = position;
         }
     }

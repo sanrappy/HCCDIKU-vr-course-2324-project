@@ -37,8 +37,8 @@ public class LocomotionSampleSupport : MonoBehaviour
     {
         lc = FindObjectOfType<LocomotionController>();
         //DebugUIBuilder.instance.AddButton("Node Teleport w/ A", SetupNodeTeleport);
-        DebugUIBuilder.instance.AddButton("Dual-stick teleport", SetupTwoStickTeleport);
-        DebugUIBuilder.instance.AddButton("L Strafe R Teleport", SetupLeftStrafeRightTeleport);
+        //DebugUIBuilder.instance.AddButton("Dual-stick teleport", SetupTwoStickTeleport);
+        //DebugUIBuilder.instance.AddButton("L Strafe R Teleport", SetupLeftStrafeRightTeleport);
         //DebugUIBuilder.instance.AddButton("R Turn L Teleport", SetupRightTurnLeftTeleport);
         DebugUIBuilder.instance.AddButton("Walk Only", SetupWalkOnly);
         DebugUIBuilder.instance.AddButton("Normal Grabbing", SetNormalGrabbing);
@@ -52,13 +52,13 @@ public class LocomotionSampleSupport : MonoBehaviour
             Debug.LogError("Need EventSystem");
         }
 
-        SetupTwoStickTeleport();
+        SetupWalkOnly();
 
         // SAMPLE-ONLY HACK:
         // Due to restrictions on how Unity project settings work, we just hackily set up default
         // to ignore the water layer here. In your own project, you should set up your collision
         // layers properly through the Unity editor.
-        Physics.IgnoreLayerCollision(0, 4);
+        //Physics.IgnoreLayerCollision(0, 4);
     }
 
     public void Update()
