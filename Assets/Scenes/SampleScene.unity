@@ -2821,6 +2821,7 @@ MonoBehaviour:
   headerParams:
   - time
   - accuracy
+  - checkpointCall
 --- !u!4 &120335469
 Transform:
   m_ObjectHideFlags: 0

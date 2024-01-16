@@ -62,8 +62,8 @@ public class TurningControllers : MonoBehaviour
 
             if (OVRInput.GetDown(OVRInput.Button.Two) && isRecording == true) {
                 // restore position to last checkpoint
-                this.gameObject.transform.position = new Vector3(checkPoint.x,checkPoint.y+7,checkPoint.z);
-                rb.velocity = checkPointVelocity;
+                this.gameObject.transform.position = new Vector3(checkPoint.x,checkPoint.y+5,checkPoint.z);
+                rb.velocity = checkPointVelocity * 0.5f;
                 callToCheckPoint++;
             }
             
