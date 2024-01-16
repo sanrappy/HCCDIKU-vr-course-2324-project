@@ -4,6 +4,7 @@ using TMPro;
 public class PointsGame : MonoBehaviour
 {
     // Start is called before the first frame update
+    public int numberOfFlags;
     public int scorePlayer;
     public TextMeshPro debug;
 
@@ -17,6 +18,6 @@ public class PointsGame : MonoBehaviour
     }
 
     void Update() {
-        debug.text = debug.text + "\n Score: " + scorePlayer.ToString();
+        if (debug) debug.text = debug.text + "      Score: " + scorePlayer.ToString();
     }
 }
