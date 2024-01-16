@@ -26,6 +26,7 @@ public class TurningControllers : MonoBehaviour
     private float prevAngle;
     private bool isRecording;
     private Vector3 checkPoint;
+    private Vector3 checkPointVelocity;
     private int callToCheckPoint;
 
     // Start is called before the first frame update
@@ -54,13 +55,15 @@ public class TurningControllers : MonoBehaviour
             rb.useGravity = true;
             isRecording = true;
             checkPoint = this.transform.position;
+            checkPointVelocity = rb.velocity;
         }
 
         if (isCalibrate == true) {
 
             if (OVRInput.GetDown(OVRInput.Button.Two) && isRecording == true) {
                 // restore position to last checkpoint
-                this.gameObject.transform.position = checkPoint;
+                this.gameObject.transform.position = new Vector3(checkPoint.x,checkPoint.y+7,checkPoint.z);
+                rb.velocity = checkPointVelocity;
                 callToCheckPoint++;
             }
             
@@ -152,6 +155,7 @@ public class TurningControllers : MonoBehaviour
 
     public void UpdateCheckpoint (Vector3 position){
         checkPoint = position;
+        checkPointVelocity = rb.velocity;
     }
 
 }

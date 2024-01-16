@@ -18,6 +18,6 @@ public class PointsGame : MonoBehaviour
     }
 
     void Update() {
-        if (debug) debug.text = debug.text + "      Score: " + scorePlayer.ToString();
+        if (debug) debug.text = debug.text + "\nScore: " + scorePlayer.ToString();
     }
 }

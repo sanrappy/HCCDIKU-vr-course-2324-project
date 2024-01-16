@@ -19,7 +19,7 @@ public class FinishLine : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player") 
+        if (collider.gameObject.tag == "Player" && isFinish == false) 
         {   
             isFinish = true;
             gameObject.GetComponent<Renderer>().materials[0].SetColor("_Color", Color.green);
@@ -32,7 +32,7 @@ public class FinishLine : MonoBehaviour
 
     void Update() {
         if (isFinish == true) {
-            if (debug) debug.text = "\nFinish!\nTime: "+data[0]+"   Accuracy: "+data[1]+"   Restored Checkpoints: "+data[2]+"%\nPress X button to start the next race!";
+            if (debug) debug.text = "\nFinish!\nTime: "+data[0]+"   Accuracy: "+data[1]+"%   Restored Checkpoints: "+data[2]+"\nPress X button to start the next race!";
         }
     }
 
