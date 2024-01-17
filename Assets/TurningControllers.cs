@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using TMPro;
+using System.Threading;
 
 public class TurningControllers : MonoBehaviour
 {
@@ -8,12 +9,16 @@ public class TurningControllers : MonoBehaviour
     public Transform leftController;
     public Transform rightController;
     public TextMeshPro debug;
+    public GameObject finishLine;
+    public DataLogger dataLogger;
+    public GameObject resetScene;
     public float smooth; // Map controller rotation angle to the player direction and orientation
     public int minRotation; // Reduce Noise to start turning
     public float maxRotation; // Control when to break
     public int userId;
     public int trialId;
     public float timer;
+    public float timeout;
 
     private Rigidbody rb;
     private float angle;
@@ -28,6 +33,9 @@ public class TurningControllers : MonoBehaviour
     private Vector3 checkPoint;
     private Vector3 checkPointVelocity;
     private int callToCheckPoint;
+    private Quaternion checkPointRotation;
+    private bool isTimeout;
+    private float startTimeout;
 
     // Start is called before the first frame update
     void  Start()
@@ -41,6 +49,8 @@ public class TurningControllers : MonoBehaviour
         isRecording = false;
         timer = 0.0f;
         callToCheckPoint = 0;
+        isTimeout = false;
+        startTimeout = 0.0f;
     }
 
     // Update is called once per frame
@@ -56,19 +66,45 @@ public class TurningControllers : MonoBehaviour
             isRecording = true;
             checkPoint = this.transform.position;
             checkPointVelocity = rb.velocity;
+            checkPointRotation = this.transform.rotation;
         }
 
         if (isCalibrate == true) {
 
-            if (OVRInput.GetDown(OVRInput.Button.Two) && isRecording == true) {
+            if (OVRInput.GetDown(OVRInput.RawButton.B) && isRecording == true) {
                 // restore position to last checkpoint
                 this.gameObject.transform.position = new Vector3(checkPoint.x,checkPoint.y+5,checkPoint.z);
-                rb.velocity = checkPointVelocity * 0.5f;
+                this.gameObject.transform.rotation = checkPointRotation;
+                rb.velocity = checkPointVelocity * 0.6f;
                 callToCheckPoint++;
             }
             
-            if (isRecording) timer += Time.deltaTime;
-            if (debug) debug.text = "Press B button to restart from the last checkpoint\nTime: " + timer;
+            // Check the timout -> if time > timeout and position is the same -> finish the run 
+            if (isTimeout == false) {
+                if (debug) debug.text = "Press B button to restart from the last checkpoint\nTime: " + timer;
+            }else{
+                if (debug) debug.text = "\nTimeout Occurred\nPlease remember to give us the feedback for this run\nPress X button to start the next run!";
+            }
+            
+            if (isRecording) {
+                timer += Time.deltaTime;
+                if (rb.velocity.magnitude < 0.01f){
+                    startTimeout += Time.deltaTime;
+                    if (debug) debug.text = "\nTimeout: "+(timeout-startTimeout);
+                    if ( startTimeout > timeout ) {
+                        // stop the game
+                        isTimeout = true;
+                        finishLine.gameObject.GetComponent<FinishLine>().Timeout();
+                        string [] data = GameStats();
+                        dataLogger.StartLogging();
+                        dataLogger.Log(userId, trialId, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(), "GiantSlalom", "timeout", data[1].ToString(), data[2].ToString());
+                        dataLogger.StopLogging();
+                        resetScene.gameObject.GetComponent<ResetScene>().setFinish();
+                    }
+                }else{
+                    startTimeout = 0.0f;
+                }
+            }
 
             float leftControllerRotation = leftController.eulerAngles.z - initialLeftControllerRotation;
             float rightControllerRotation = rightController.eulerAngles.z - initialRightControllerRotation;
@@ -139,7 +175,7 @@ public class TurningControllers : MonoBehaviour
             //if (debug) debug.text = debug.text + "\nVelocity Magnitude:" + rb.velocity.magnitude;
             
         }else{
-            debug.text = "Welcome to Giant Slalom Skiing Simulator!\nTry to turn around every flag and reach the finish line!\nYou will test 6 different game version\nAt the end of each run you will be asked too give a feedback\nCALIBRATION\nPress A button to calibrate your controllers and start skiing!";
+            debug.text = "Welcome to Giant Slalom Skiing Simulator!\nTry to turn around every flag and reach the finish line!\nYou will try different game versions\nAt the end of each run you will be asked to give a feedback\nCALIBRATION\nPress A button to calibrate your controllers and start skiing!";
             return;
         }
 
@@ -147,6 +183,7 @@ public class TurningControllers : MonoBehaviour
 
     public string[] GameStats () {
         isRecording = false;
+        this.GetComponent<PointsGame>().Finish();
         float score = this.gameObject.GetComponent<PointsGame>().scorePlayer;
         int totalScore = this.gameObject.GetComponent<PointsGame>().numberOfFlags;
         int accuracy = (int) (score / totalScore * 100);
@@ -156,6 +193,7 @@ public class TurningControllers : MonoBehaviour
     public void UpdateCheckpoint (Vector3 position){
         checkPoint = position;
         checkPointVelocity = rb.velocity;
+        checkPointRotation = this.gameObject.transform.rotation;
     }
 
 }

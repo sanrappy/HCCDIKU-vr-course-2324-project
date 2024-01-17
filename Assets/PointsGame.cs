@@ -8,7 +8,10 @@ public class PointsGame : MonoBehaviour
     public int scorePlayer;
     public TextMeshPro debug;
 
+    private bool isFinish;
+
     void Start(){
+        isFinish = false;
         scorePlayer = 0;
     }
 
@@ -17,7 +20,13 @@ public class PointsGame : MonoBehaviour
         scorePlayer++;
     }
 
+    public void Finish(){
+        isFinish = true;
+    }
+
     void Update() {
-        if (debug) debug.text = debug.text + "\nScore: " + scorePlayer.ToString();
+        if (isFinish == false) {
+            if (debug) debug.text = debug.text + "\nScore: " + scorePlayer.ToString();
+        }
     }
 }
