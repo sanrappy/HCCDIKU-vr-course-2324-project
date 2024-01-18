@@ -5482,7 +5482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: {fileID: 1327348235}
-  nextConfig: -1
+  nextConfig: 3
 --- !u!4 &782628377
 Transform:
   m_ObjectHideFlags: 0

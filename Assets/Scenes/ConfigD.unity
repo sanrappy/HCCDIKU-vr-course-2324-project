@@ -2004,7 +2004,7 @@ MonoBehaviour:
   finishLine: {fileID: 246260212}
   dataLogger: {fileID: 120335468}
   resetScene: {fileID: 782628375}
-  smooth: 0.01
+  smooth: 0.005
   minRotation: 15
   maxRotation: 120
   userId: 1
@@ -5482,7 +5482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: {fileID: 1327348235}
-  nextConfig: -1
+  nextConfig: 4
 --- !u!4 &782628377
 Transform:
   m_ObjectHideFlags: 0
@@ -6403,7 +6403,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1087235370}
-  m_Material: {fileID: 13400000, guid: cd8e768eb51b74833963cac74d4be087, type: 2}
+  m_Material: {fileID: 13400000, guid: a3551b15ac5ff41829c15e23df89497a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
